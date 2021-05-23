@@ -1,0 +1,23 @@
+{
+  "name": "punhouse",
+  "version": "1.0.0",
+  "description": "A categories game to practice for your next Pun Championship!",
+  "main": "dist/console.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jake Palmer",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ijambro/punhouse.git"
+  },
+  "devDependencies": {
+    "@types/node": "^15.6.0",
+    "@types/prompt": "^1.1.0",
+    "typescript": "^4.2.4"
+  },
+  "dependencies": {
+    "prompt": "^1.1.0"
+  }
+}
