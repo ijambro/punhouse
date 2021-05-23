@@ -12,16 +12,9 @@ async function startGame() {
     const {username, email, level} = await prompt.get([{
         name: "username",
         message: "Your name"
-    }, {
-        name: "email",
-        message: "Your email"
-    }, {
-        name: "level",
-        message: "Level of difficulty"
     }]);
 
     console.log('\n  Thanks for joining us, ' + username);
-    console.log('  email: ' + email);
 
     playCategories(username, level);
 }
@@ -32,28 +25,33 @@ async function playCategories(username: string | RevalidatorSchema, level: strin
     console.log(`\nAll categories:`);
 
     for (let c of categories.all()) {
-        console.log(` Category: ${c.name} has ${c.items.size} items, with difficulty ${c.level}`);
+        console.log(` Category: ${c.name} has ${c.items.size} items, with difficulty ${c.getDifficulty()}`);
     }
 
     console.log(`\nRandomly choosing a category for you...`);
     let c = categories.random();
-    console.log(` Category: ${c.name} has ${c.items.size} items, with difficulty ${c.level}`);
+    console.log(` Category: ${c.name} has ${c.items.size} items, with difficulty ${c.getDifficulty()}`);
 
     let score = 0;
     let keepPlaying = true;
-    while(keepPlaying) {
+    while(keepPlaying) {        
         const {item} = await prompt.get([{
             name: "item",
-            message: `Type a ${c.name}`
+            message: `Type a ${c.promptName} (or enter to quit)`
         }]);
 
-        if (item) {
-            console.log(` Do you really think ${item} is a ${c.name}?!  Ok, good enough.  Name another...`);
-            score++;
+        if (item && typeof item === "string") {
+            if (c.hasItem(item)) {
+                console.log(` Wow, awesome! ${item} IS a ${c.promptName}!  Let's keep going...`);
+                score += 5;
+            } else {
+                console.log(` Do you really think ${item} is a ${c.name}?!  Ok, good enough.  Name another...`);
+                score++;
+            }
         } else {
             keepPlaying = false;
         }
     }
 
-    console.log(` GREAT JOB, ${username}!  Your score is ${score} points!`);
+    console.log(`\nGREAT JOB, ${username}!  Your score was ${score} points!`);
 }
