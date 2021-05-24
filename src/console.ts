@@ -1,5 +1,5 @@
 import prompt, { RevalidatorSchema } from "prompt";
-import Categories from "./categories";
+import categoriesController from "./controllers/categories";
 
 console.log("Welcome to Punhouse!\n");
 
@@ -20,17 +20,14 @@ async function startGame() {
 }
 
 async function playCategories(username: string | RevalidatorSchema, level: string | RevalidatorSchema) {
-    let categories = new Categories();
-
-    console.log(`\nAll categories:`);
-
-    for (let c of categories.all()) {
-        console.log(` Category: ${c.name} has ${c.items.size} items, with difficulty ${c.getDifficulty()}`);
-    }
+    // console.log(`\nAll categories:`);
+    // for (let c of categoriesController.all()) {
+    //     console.log(` Category: ${c.name} has ${c.size()} items, with difficulty ${c.getDifficulty()}`);
+    // }
 
     console.log(`\nRandomly choosing a category for you...`);
-    let c = categories.random();
-    console.log(` Category: ${c.name} has ${c.items.size} items, with difficulty ${c.getDifficulty()}`);
+    let c = categoriesController.random();
+    console.log(` Category: ${c.name} has ${c.size()} items, with difficulty ${c.getDifficulty()}`);
 
     let score = 0;
     let keepPlaying = true;

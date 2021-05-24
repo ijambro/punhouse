@@ -1,4 +1,5 @@
 import expressLib from "express";
+import categoriesRouter from "./routes/categories";
 
 class ExpressApp {
   public express;
@@ -26,6 +27,7 @@ class ExpressApp {
     });
 
     this.express.use("/", router);
+    this.express.use("/categories", categoriesRouter);
   }
 }
 

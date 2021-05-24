@@ -1,11 +1,13 @@
 type Difficulty = "easy" | "medium" | "hard";
 
-export default class Category {
+class Category {
+    public id: number;
     public name: string | undefined;
     public promptName: string | undefined;
-    public items: Set<string>;
+    private items: Set<string>;
 
-    constructor(name: string, promptName: string) {
+    constructor(id: number, name: string, promptName: string) {
+        this.id = id;
         this.name = name;
         this.promptName = promptName;
         this.items = new Set<string>();
@@ -21,6 +23,10 @@ export default class Category {
         return this.items.has(item);
     }
 
+    size(): number {
+        return this.items.size;
+    }
+
     getDifficulty(): Difficulty {
         if (this.items.size < 4) {
             return "hard";
@@ -31,3 +37,6 @@ export default class Category {
         }
     }
 }
+
+export default Category;
+export const fieldsToInclude = ["id", "name"];
